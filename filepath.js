@@ -1,5 +1,7 @@
 const fs = require('fs');
 const path = require("path");
+const cheeiro = require('cheerio')
+
 const MyPath = 'F:\\data\\PHP_Pro01';
 
 const readDirSync = (path) =>
@@ -24,13 +26,21 @@ const readDirSync = (path) =>
                         console.error(err)
                     }
                     else {
-                        let codeText = data.toString()
-                        let ScriptRegExp = /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi;
-                        while (ScriptRegExp.test(codeText)) {
-                            codeText = codeText.replace(ScriptRegExp, "")
-                        }
-                        writeFile(filepath, codeText)
-                        console.log(codeText)
+                        // <---cheeiro--->
+                        $ = cheeiro.load(data.toString())
+                        $("script").remove()
+                        console.log($.html())
+                        writeFile(filepath, $.html().toString())
+
+
+                        //<---正则表达式的方式--->
+                        // let codeText = data.toString()
+                        // let ScriptRegExp = /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi;
+                        // while (ScriptRegExp.test(codeText)) {
+                        //     codeText = codeText.replace(ScriptRegExp, "")
+                        // }
+                        // writeFile(filepath, codeText)
+                        // console.log(codeText)
                     }
 
                 })
