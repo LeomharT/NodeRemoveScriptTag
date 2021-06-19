@@ -2,11 +2,13 @@ const fs = require('fs');
 const path = require("path");
 const cheeiro = require('cheerio')
 
+//顶层目录.这里的路径换一下就可以运行
 const MyPath = 'F:\\data\\PHP_Pro01';
 
 const readDirSync = (path) =>
 {
     let ps = fs.readdirSync(path);
+
     ps.forEach((element, index) =>
     {
         let info = fs.statSync(path + "\\" + element);
@@ -26,6 +28,7 @@ const readDirSync = (path) =>
                         console.error(err)
                     }
                     else {
+
                         // <---cheeiro--->
                         $ = cheeiro.load(data.toString())
                         $("script").remove()
