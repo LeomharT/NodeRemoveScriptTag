@@ -73,7 +73,6 @@ const writeFile = (path: any, code: any) =>
 };
 
 //顶层目录.从命令行读
-
 // const myPath: string = "F:\\data\\PHP_Pro01";
 const myPath: string = process.argv.slice(2).toString();
 removeScript(getTargetFiles(Files, /\.html/g));
