@@ -8,7 +8,7 @@ const cheeiro = require('cheerio');
     This array will contain all files in the path.
 */
 const Files: any[] = new Array();
-const getFileList = (filePath: string, fileSuffix: RegExp) =>
+const getFileList = (filePath: string) =>
 {
     let pathArray = fs.readdirSync(filePath);
 
@@ -19,7 +19,7 @@ const getFileList = (filePath: string, fileSuffix: RegExp) =>
         let isDir = fs.statSync(absPath);
 
         //Recursion
-        if (isDir.isDirectory()) { getFileList(absPath, fileSuffix); return; };
+        if (isDir.isDirectory()) { getFileList(absPath); return; };
 
         Files.push(absPath);
     });
@@ -29,7 +29,7 @@ const getFileList = (filePath: string, fileSuffix: RegExp) =>
 //This function return the specific files that you require
 const getTargetFiles = (fileList: any[], fileNameReg: RegExp) =>
 {
-    getFileList(myPath, fileNameReg);
+    getFileList(myPath);
 
     let requiredFile: any[] = new Array();
 
@@ -72,7 +72,8 @@ const writeFile = (path: any, code: any) =>
     });
 };
 
-//顶层目录.从命令行读
+
 // const myPath: string = "F:\\data\\PHP_Pro01";
+//顶层目录.从命令行读
 const myPath: string = process.argv.slice(2).toString();
 removeScript(getTargetFiles(Files, /\.html/g));
