@@ -43,7 +43,7 @@ const getTargetFiles = (fileList: any[], fileNameReg: RegExp) =>
     return requiredFile;
 };
 
-const removeScript = (htmlFiles: any[], tagName: string) =>
+const removeTag = (htmlFiles: any[], tagName: string) =>
 {
     htmlFiles.forEach((file: any, index: number) =>
     {
@@ -76,4 +76,4 @@ const writeFile = (path: any, code: any) =>
 // const myPath: string = "F:\\data\\PHP_Pro01";
 //顶层目录.从命令行读
 const myPath: string = process.argv.slice(2).toString();
-removeScript(getTargetFiles(Files, /\.html/g), "script");
+removeTag(getTargetFiles(Files, /\.html/g), "script");
