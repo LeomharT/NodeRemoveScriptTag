@@ -43,7 +43,7 @@ const getTargetFiles = (fileList: any[], fileNameReg: RegExp) =>
     return requiredFile;
 };
 
-const removeScript = (htmlFiles: any[]) =>
+const removeScript = (htmlFiles: any[], tagName: string) =>
 {
     htmlFiles.forEach((file: any, index: number) =>
     {
@@ -51,7 +51,7 @@ const removeScript = (htmlFiles: any[]) =>
         {
             if (err) { console.error(err); return; }
             let $ = cheeiro.load(data.toString());
-            $("script").remove();
+            $(tagName).remove();
             writeFile(file, $.html().toString());
         });
     });
@@ -76,4 +76,4 @@ const writeFile = (path: any, code: any) =>
 // const myPath: string = "F:\\data\\PHP_Pro01";
 //顶层目录.从命令行读
 const myPath: string = process.argv.slice(2).toString();
-removeScript(getTargetFiles(Files, /\.html/g));
+removeScript(getTargetFiles(Files, /\.html/g), "script");
