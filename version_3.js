@@ -8,7 +8,8 @@ const getFileList = (filePath, fileNameReg) => {
     let pathArray = fs.readdirSync(filePath);
 
     pathArray.forEach((path) => {
-        let absPath = filePath + PATH.sep + path;
+
+        let absPath = filePath + PATH.sep + path; //PATH.sep,get Delimiter from system
         let isDir = fs.statSync(absPath);
 
         //Recursion
