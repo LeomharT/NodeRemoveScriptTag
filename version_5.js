@@ -19,6 +19,8 @@ const getFileList = (fs, folder, regexFilte, fileList, fileSeparator) => {
         };
 
         if (regexFilte.test(absPath)) {
+            // return fileList.concat(absPath);
+            // return absPath;
             fileList.push(absPath);
         };
     });
