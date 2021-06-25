@@ -1,4 +1,3 @@
-
 {
     "typescript.tsdk": "node_modules\\typescript\\lib",
     "editor.tabSize": 4,
@@ -9,10 +8,11 @@
     "typescript.format.placeOpenBraceOnNewLineForFunctions": true,
     "typescript.format.placeOpenBraceOnNewLineForControlBlocks": true,
     "typescript.referencesCodeLens.enabled": true,
-    "javascript.format.placeOpenBraceOnNewLineForFunctions": true,
+    "javascript.format.placeOpenBraceOnNewLineForFunctions": false, //保存大括号在左边不换行
     "javascript.format.enable": true,
     "files.insertFinalNewline": true,
     "typescript.format.semicolons": "insert",
+    "javascript.format.semicolons": "insert",
     "files.trimFinalNewlines": true,
     "files.trimTrailingWhitespace": true
 }

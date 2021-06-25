@@ -7,21 +7,21 @@ const cheeiro = require('cheerio');
     Then i use this array inside of(--- getFileList---).
     This array will contain all files in the path.
 */
-const Files = new Array();
-const getFileList = (filePath) =>
+const files = new Array();
+const getFileList = (filePath) =>  //正则可以在这里
 {
     let pathArray = fs.readdirSync(filePath);
 
     pathArray.forEach((path) =>
     {
-        let absPath = filePath + "\\" + path;
+        let absPath = filePath + "\\" + path; //系统斜杠找出来
 
         let isDir = fs.statSync(absPath);
 
         //Recursion
         if (isDir.isDirectory()) { getFileList(absPath); return; };
 
-        Files.push(absPath);
+        files.push(absPath);
     });
 
 };
@@ -43,7 +43,7 @@ const getTargetFiles = (fileList, fileNameReg) =>
     return requiredFile;
 };
 
-const removeTag = (htmlFiles, tagName) =>
+const removeTag = (htmlFiles, tagName) => //传文件不是传数组
 {
     htmlFiles.forEach((file, index) =>
     {
