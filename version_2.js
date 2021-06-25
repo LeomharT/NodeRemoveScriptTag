@@ -7,12 +7,12 @@ const cheeiro = require('cheerio');
     Then i use this array inside of(--- getFileList---).
     This array will contain all files in the path.
 */
-const Files: any[] = new Array();
-const getFileList = (filePath: string) =>
+const Files = new Array();
+const getFileList = (filePath) =>
 {
     let pathArray = fs.readdirSync(filePath);
 
-    pathArray.forEach((path: string) =>
+    pathArray.forEach((path) =>
     {
         let absPath = filePath + "\\" + path;
 
@@ -27,11 +27,11 @@ const getFileList = (filePath: string) =>
 };
 
 //This function return the specific files that you require
-const getTargetFiles = (fileList: any[], fileNameReg: RegExp) =>
+const getTargetFiles = (fileList, fileNameReg) =>
 {
     getFileList(myPath);
 
-    let requiredFile: any[] = new Array();
+    let requiredFile = new Array();
 
     fileList.forEach((fileName, index) =>
     {
@@ -43,11 +43,11 @@ const getTargetFiles = (fileList: any[], fileNameReg: RegExp) =>
     return requiredFile;
 };
 
-const removeTag = (htmlFiles: any[], tagName: string) =>
+const removeTag = (htmlFiles, tagName) =>
 {
-    htmlFiles.forEach((file: any, index: number) =>
+    htmlFiles.forEach((file, index) =>
     {
-        fs.readFile(file, (err: any, data: any) =>
+        fs.readFile(file, (err, data) =>
         {
             if (err) { console.error(err); return; }
             let $ = cheeiro.load(data.toString());
@@ -57,16 +57,14 @@ const removeTag = (htmlFiles: any[], tagName: string) =>
     });
 };
 
-const writeFile = (path: any, code: any) =>
+const writeFile = (path, code) =>
 {
-    fs.writeFile(path, code, (err: any) =>
+    fs.writeFile(path, code, (err) =>
     {
-        if (err)
-        {
+        if (err) {
             console.error(err);
         }
-        else
-        {
+        else {
             console.log("format file success :", path);
         }
     });
@@ -75,5 +73,5 @@ const writeFile = (path: any, code: any) =>
 
 // const myPath: string = "F:\\data\\PHP_Pro01";
 //顶层目录.从命令行读
-const myPath: string = process.argv.slice(2).toString();
+const myPath = process.argv.slice(2).toString();
 removeTag(getTargetFiles(Files, /\.html/g), "script");
