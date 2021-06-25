@@ -22,6 +22,7 @@ const getFileList = (fileFolder, regFilter, result, fileSeparator = require("pat
 
         if (regFilter.test(absPath)) {
             //use concat wont effect the original array.but i need effect the origin array
+            //Because is recursion function
             result.push(absPath);
         };
     });
