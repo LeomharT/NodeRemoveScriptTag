@@ -2,28 +2,31 @@ const FS = require("fs");
 const PATH = require('path');
 const CHEEIRO = require('cheerio');
 
+const getFileList = (fs, folder, fileList, fileSeparator) => {
 
-const getFileList = (fs, folder, regexFilte, fileList, fileSeparator) => {
+    if (!(fs.statSync(folder).isDirectory())) { return; }
 
     let pathArray = fs.readdirSync(folder);
 
-    pathArray.forEach((path) => {
+    return pathArray.reduce((prev, curr) => {
+        if (fs.statSync(folder + fileSeparator + curr).isDirectory()) {
+            return prev.concat(getFileList(fs, (folder + fileSeparator + curr), fileList, fileSeparator));
+        }
+        else {
+            return prev.concat(folder + fileSeparator + curr);
+        }
+    }, []);
+};
 
-        let absPath = folder + fileSeparator + path;
-        let isDir = fs.statSync(absPath);
+const getHtmlFileList = (fielList, regexFilter) => {
+    let htmlFileList = new Array();
 
-        //Recursion
-        if (isDir.isDirectory()) {
-            getFileList(fs, absPath, regexFilte, fileList, fileSeparator);
-            return;
-        };
-
-        if (regexFilte.test(absPath)) {
-            // return fileList.concat(absPath);
-            // return absPath;
-            fileList.push(absPath);
-        };
+    fielList.map(file => {
+        if (!regexFilter.test(file)) { return; }
+        htmlFileList = htmlFileList.concat(file);
     });
+
+    return htmlFileList;
 };
 //fs use async
 const removeTag = (filePath, tagName, fs, cheeiro) => {
@@ -53,13 +56,14 @@ const main = () => {
 
     const rootPath = process.argv.slice(2).toString();
 
-    let htmlFiles = new Array();
+    // let allFiles = getFileList(FS, rootPath, new Array(), PATH.sep);
 
-    getFileList(FS, rootPath, /\.html/g, htmlFiles, PATH.sep);
+    // let htmlFiles = getHtmlFileList(allFiles, /\.html/g);
+
+    let htmlFiles = getHtmlFileList(getFileList(FS, rootPath, new Array(), PATH.sep), /\.html/g);
 
     htmlFiles.map(item => {
         removeTag(item, "script", FS, CHEEIRO);
     });
 };
-
 main();
