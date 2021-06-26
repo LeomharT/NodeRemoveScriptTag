@@ -3,10 +3,9 @@ const PATH = require('path');
 const CHEEIRO = require('cheerio');
 
 const getFileList = (fs, folder, fileList, fileSeparator) => {
-
-    if (!(fs.statSync(folder).isDirectory())) { return; }
-
     try {
+        if (!(fs.statSync(folder).isDirectory())) { return; }
+
         let pathArray = fs.readdirSync(folder);
 
         return pathArray.reduce((prev, curr) => {
