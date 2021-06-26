@@ -69,7 +69,6 @@ const main = () => {
 
     let htmlFiles = getTargetFile(getFileList(FS, rootPath, new Array(), PATH.sep), /\.html/g);
 
-
     htmlFiles.map(item => {
         removeTag(item, "script", FS, CHEEIRO);
     });
